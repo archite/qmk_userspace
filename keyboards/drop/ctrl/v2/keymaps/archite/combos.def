@@ -1,0 +1,8 @@
+#ifndef PREFIX
+#    define PREFIX
+#endif
+
+// #include "features/combos/win_mgmt.def"
+
+//   name       result          chord keys
+COMB(LEAD_K,    QK_LEADER,      PREFIX KC_F, KC_J)
