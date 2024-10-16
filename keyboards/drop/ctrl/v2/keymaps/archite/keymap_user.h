@@ -2,11 +2,11 @@
 
 #include QMK_KEYBOARD_H // IWYU pragma: export
 
+#include "features/utility/utility.h" // IWYU pragma: export
+
 #ifdef RGB_MATRIX_ENABLE
 #    include "features/rgb/rgb_matrix_user.h"
 #endif // RGB_MATRIX_ENABLE
-
-#include "features/utility/utility.h" // IWYU pragma: export
 
 // clang-format off
 enum custom_keycodes {

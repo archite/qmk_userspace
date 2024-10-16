@@ -81,20 +81,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case AK_SPOTLIGHT:
             AK_HCS(0x221);
             return false;
+#ifdef RGB_MATRIX_ENABLE
         case RGB_TOG:
             if (rgb_matrix_get_flags() != LED_FLAG_NONE && (mod_state & MOD_MASK_SHIFT)) {
                 rgb_matrix_set_flags(LED_FLAG_UNDERGLOW);
             }
             return true;
+#endif
         case QK_BOOTLOADER:
         case QK_CLEAR_EEPROM:
             return (mod_state == MOD_BIT(KC_LEFT_CTRL)) ? true : false;
         default:
+#ifdef RGB_MATRIX_ENABLE
             if (record->event.pressed) {
                 if (rgb_matrix_get_suspend_state()) {
                     rgb_matrix_set_suspend_state(false);
+                } else if (user_rgb_sleep) {
+                    user_rgb_sleep = false;
+                    if (!rgb_matrix_is_enabled()) {
+                        rgb_matrix_enable_noeeprom();
+                    }
                 }
             }
+#endif
             return true;
     }
 }

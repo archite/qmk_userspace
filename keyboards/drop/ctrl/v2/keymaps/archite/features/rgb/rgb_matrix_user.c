@@ -19,9 +19,11 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (cflags != LED_FLAG_NONE) {
         switch (current_layer) {
             case 0:
+#ifdef LEADER_INDICATOR_COLOR
                 if (leader_sequence_active()) {
-                    rgb_matrix_set_color_all(RGB_ORANGE);
+                    rgb_matrix_set_color_all(LEADER_INDICATOR_COLOR);
                 }
+#endif
 #ifdef CAPS_LOCK_INDICATOR_COLOR
                 if (host_keyboard_led_state().caps_lock) {
                     rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, not_transparent, CAPS_LOCK_INDICATOR_COLOR);
