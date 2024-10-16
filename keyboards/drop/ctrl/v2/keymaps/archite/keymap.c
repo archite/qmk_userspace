@@ -19,8 +19,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______,
         _______, RGB_TOG, RGB_VAI, RGB_SPI, RGB_HUI, RGB_SAI, _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______,
         _______, RGB_MOD, RGB_VAD, RGB_SPD, RGB_HUD, RGB_SAD, _______, _______, _______, _______, _______, _______,          _______,
-        _______,          RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_SW,QK_BOOT, NK_TOGG, QK_MAKE, _______, _______, _______,          _______,             _______,
-        _______, _______, _______,                            EE_CLR,                             _______, _______, _______, _______,    _______, _______, _______
+        _______,          RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_SW,_______, NK_TOGG, _______, _______, _______, _______,          _______,             _______,
+        _______, _______, _______,                            _______,                            _______, _______, _______, _______,    _______, _______, _______
     )
 };
 // clang-format on
@@ -88,9 +88,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 #endif
-        case QK_BOOTLOADER:
-        case QK_CLEAR_EEPROM:
-            return (mod_state == MOD_BIT(KC_LEFT_CTRL)) ? true : false;
         default:
 #ifdef RGB_MATRIX_ENABLE
             if (record->event.pressed) {

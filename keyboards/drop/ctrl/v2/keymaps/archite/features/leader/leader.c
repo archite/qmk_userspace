@@ -31,6 +31,33 @@ void leader_end_user(void) {
 
     MISC(C(G(KC_F)), KC_F); // full
 
+    //   qmk
+    if (leader_sequence_two_keys(KC_Q, KC_B)) {
+        reset_keyboard();
+        return;
+    }
+
+    if (leader_sequence_two_keys(KC_Q, KC_E)) {
+        eeconfig_disable();
+        soft_reset_keyboard();
+        return;
+    }
+
+    if (leader_sequence_two_keys(KC_Q, KC_M)) {
+        SEND_STRING_DELAY("qmk", TAP_CODE_DELAY);
+        SEND_STRING_DELAY(" compile ", TAP_CODE_DELAY);
+        SEND_STRING_DELAY("-kb " QMK_KEYBOARD " -km " QMK_KEYMAP SS_TAP(X_ENTER), TAP_CODE_DELAY);
+        return;
+    }
+
+    if (leader_sequence_two_keys(KC_Q, KC_F)) {
+        SEND_STRING_DELAY("qmk", TAP_CODE_DELAY);
+        SEND_STRING_DELAY(" flash ", TAP_CODE_DELAY);
+        SEND_STRING_DELAY("-kb " QMK_KEYBOARD " -km " QMK_KEYMAP SS_TAP(X_ENTER), TAP_CODE_DELAY);
+        return;
+    }
+
+    // screen locking
     if (leader_sequence_two_keys(KC_L, KC_S)) {
         ak_lock_screen();
         return;
