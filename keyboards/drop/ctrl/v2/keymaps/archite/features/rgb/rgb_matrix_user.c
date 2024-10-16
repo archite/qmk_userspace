@@ -21,7 +21,8 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             case 0:
 #ifdef LEADER_INDICATOR_COLOR
                 if (leader_sequence_active()) {
-                    rgb_matrix_set_color_all(LEADER_INDICATOR_COLOR);
+                    rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, not_transparent, LEADER_INDICATOR_COLOR);
+                    rgb_matrix_set_underglow_color(led_min, led_max, LEADER_INDICATOR_COLOR);
                 }
 #endif
 #ifdef CAPS_LOCK_INDICATOR_COLOR
@@ -29,7 +30,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                     rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, not_transparent, CAPS_LOCK_INDICATOR_COLOR);
                 } else if (is_caps_word_on()) {
                     rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, is_caps_lock_indicator, CAPS_LOCK_INDICATOR_COLOR);
-                    // rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, not_caps_lock_indicator, RGB_OFF);
+                    rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, not_caps_lock_indicator, RGB_OFF);
                 }
 #    ifdef CAPS_LOCK_INDICATOR_UNDERGLOW
                 if (host_keyboard_led_state().caps_lock | is_caps_word_on()) {
@@ -81,20 +82,27 @@ void rgb_matrix_set_underglow_color(uint8_t led_min, uint8_t led_max, uint8_t re
 bool is_caps_lock_indicator(uint16_t keycode) {
 #ifdef CAPS_LOCK_INDICATOR_LIGHT_ALPHAS
     switch (keycode) {
-        case KC_A ... KC_Z:
-        case KC_MINS:
-        case KC_1 ... KC_0:
-        case KC_BSPC:
-        case KC_DEL:
-        case KC_UNDS:
-        case KC_CAPS:
+        case AK_A:
         case AK_CAPS:
+        case AK_D:
+        case AK_F:
+        case AK_J:
+        case AK_K:
+        case AK_L:
+        case AK_S:
+        case KC_1 ... KC_0:
+        case KC_A ... KC_Z:
+        case KC_BSPC:
+        case KC_CAPS:
+        case KC_DEL:
+        case KC_MINS:
+        case KC_UNDS:
             return true;
         default:
             return false;
     }
 #else
-    return keycode == KC_CAPS;
+    return (keycode == AK_CAPS) || (keycode == KC_CAPS);
 #endif
 }
 
