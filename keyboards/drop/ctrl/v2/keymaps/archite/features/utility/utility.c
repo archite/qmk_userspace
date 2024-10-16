@@ -1,4 +1,4 @@
-#include "utility.h"
+#include "features/utility/utility.h"
 
 void ak_lock_screen(void) {
     tap_code16(C(G(KC_Q)));

@@ -25,6 +25,62 @@
 #define HALVES(key, third) WIN_3K(key, KC_H, third)
 #define MISC(key, third) WIN_3K(key, KC_M, third)
 
+uint8_t fourths[] = {
+    KC_F, // first
+    KC_L, // last
+};
+
+uint8_t thirds[] = {
+    KC_F, // first
+    KC_V, // first 2/3
+    KC_C, // center
+    KC_M, // center 2/3
+    KC_L, // last
+    KC_N, // last 2/3
+};
+
+uint8_t halves[] = {
+    KC_B, // bottom
+    KC_F, // first
+    KC_C, // center
+    KC_L, // last
+    KC_T, // TOP
+};
+
+uint8_t misc[] = {
+    KC_C, // center
+    KC_P, // previous
+    KC_R, // reset
+    KC_M, // almost max
+};
+
+// clang-format off
+#define GEN_F_KEYS(key) \
+    KC_ ## key, \
+    A(KC_ ## key), \
+    A(C(KC_ ## key)), \
+    A(C(G(KC_ ## key))), \
+    A(C(G(S(KC_ ## key)))), \
+    A(C(S(KC_ ## key))), \
+    A(G(KC_ ## key)), \
+    A(G(S(KC_ ## key))), \
+    A(S(KC_ ## key)), \
+    C(KC_ ## key), \
+    C(G(KC_ ## key)), \
+    C(G(S(KC_ ## key))), \
+    C(S(KC_ ## key)), \
+    G(KC_ ## key), \
+    G(S(KC_ ## key))
+
+uint16_t F_KEYS[] = {
+    GEN_F_KEYS(F16),
+    GEN_F_KEYS(F17),
+    GEN_F_KEYS(F18),
+    GEN_F_KEYS(F19),
+    GEN_F_KEYS(F20),
+};
+// clang-format on
+
 // Order
 // A
 // AC
@@ -41,37 +97,7 @@
 // G
 // GS
 
-void leader_end_user(void) {
-    // window management
-    //   Fourths
-    FOURTHS(A(KC_F16), KC_F);    // first
-    FOURTHS(A(C(KC_F16)), KC_L); // last
-
-    //   thirds
-    THIRDS(A(C(G(KC_F16))), KC_F);      // first
-    THIRDS(A(C(G(S((KC_F16))))), KC_C); // center
-    THIRDS(A(C(S((KC_F16)))), KC_L);    // last
-
-    //   halves
-    HALVES(A(G(KC_F16)), KC_F);    // first
-    HALVES(A(G(S(KC_F16))), KC_C); // center
-    HALVES(A(S(KC_F16)), KC_L);    // last
-    HALVES(C(KC_F16), KC_B);       // bottom
-    HALVES(C(G(KC_F16)), KC_T);    // top
-
-    //   misc
-    MISC(C(G(S(KC_F16))), KC_C); // center
-    MISC(C(S(KC_F16)), KC_P);    // previous
-    MISC(G(KC_F16), KC_M);       // center 2/3
-    MISC(C(G(KC_F)), KC_F);      // full
-
-    if (leader_sequence_two_keys(KC_L, KC_S)) {
-        ak_lock_screen();
-        return;
-    }
-
-    if (leader_sequence_two_keys(KC_S, KC_S)) {
-        ak_screen_saver();
-        return;
-    }
-}
+// uint8_t fourths[] = {
+//     KC_G,
+//     // KC_L,
+// };

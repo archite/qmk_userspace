@@ -6,7 +6,7 @@
 #    include "features/rgb/rgb_matrix_user.h"
 #endif // RGB_MATRIX_ENABLE
 
-#include "utility.h" // IWYU pragma: export
+#include "features/utility/utility.h" // IWYU pragma: export
 
 // clang-format off
 enum custom_keycodes {

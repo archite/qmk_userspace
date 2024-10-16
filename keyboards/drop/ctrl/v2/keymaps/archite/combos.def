@@ -6,3 +6,5 @@
 
 //   name       result          chord keys
 COMB(LEAD_K,    QK_LEADER,      PREFIX KC_F, KC_J)
+COMB(APP_NEXT,  G(KC_TAB),      PREFIX KC_A, KC_N)
+COMB(WIN_NEXT,  G(KC_GRV),      PREFIX KC_W, KC_N)
