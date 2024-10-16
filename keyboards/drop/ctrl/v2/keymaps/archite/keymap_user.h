@@ -30,5 +30,19 @@ enum custom_keycodes {
 #define AK_HCS(x) host_consumer_send(record->event.pressed ? x : 0)
 #define AK_HSS(x) host_system_send(record->event.pressed ? x : 0)
 
-#define LCG(key) C(G(key))
+// mod-tap homerow
+//   Left
+#define AK_A LSFT_T(KC_A)
+#define AK_S RCTL_T(KC_S)
+#define AK_D LOPT_T(KC_D)
+#define AK_F LCMD_T(KC_F)
+
+//   Right
+#define AK_J LCMD_T(KC_J)
+#define AK_K LOPT_T(KC_K)
+#define AK_L RCTL_T(KC_L)
+#define AK_SCLN LSFT_T(KC_SCLN)
+
+// movement
+#define AK_SPC LT(2, KC_SPC)
 // clang-format on

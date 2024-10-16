@@ -39,6 +39,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 #endif
                 break;
             case 1:
+            case 2:
 #ifdef FN_LAYER_INDICATOR_COLOR
                 rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, not_transparent, FN_LAYER_INDICATOR_COLOR);
 #    ifdef CAPS_LOCK_INDICATOR_UNDERGLOW
