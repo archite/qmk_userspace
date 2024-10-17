@@ -40,11 +40,21 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 #endif
                 break;
             case 1:
+#ifdef FN_LAYER_INDICATOR_1_COLOR
+                rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, not_transparent, FN_LAYER_INDICATOR_1_COLOR);
+#    ifdef FN_LAYER_INDICATOR_UNDERGLOW
+                rgb_matrix_set_underglow_color(led_min, led_max, FN_LAYER_INDICATOR_1_COLOR);
+#    endif
+#endif
+#ifdef FN_LAYER_TRANSPARENT_KEYS_OFF
+                rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, is_transparent, RGB_OFF);
+#endif
+                break;
             case 2:
-#ifdef FN_LAYER_INDICATOR_COLOR
-                rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, not_transparent, FN_LAYER_INDICATOR_COLOR);
-#    ifdef CAPS_LOCK_INDICATOR_UNDERGLOW
-                rgb_matrix_set_underglow_color(led_min, led_max, FN_LAYER_INDICATOR_COLOR);
+#ifdef FN_LAYER_INDICATOR_2_COLOR
+                rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, not_transparent, FN_LAYER_INDICATOR_2_COLOR);
+#    ifdef FN_LAYER_INDICATOR_UNDERGLOW
+                rgb_matrix_set_underglow_color(led_min, led_max, FN_LAYER_INDICATOR_2_COLOR);
 #    endif
 #endif
 #ifdef FN_LAYER_TRANSPARENT_KEYS_OFF
