@@ -9,21 +9,21 @@ void leader_end_user(void) {
     }
 
 #undef F_INDEX
-#define F_INDEX 5
+#define F_INDEX 10
     //   thirds
     for (uint8_t i = 0; i < sizeof(thirds); i++) {
         THIRDS(F_KEYS[F_INDEX + i], thirds[i]);
     }
 
 #undef F_INDEX
-#define F_INDEX 15
+#define F_INDEX 20
     //   halves
     for (uint8_t i = 0; i < sizeof(halves); i++) {
         HALVES(F_KEYS[F_INDEX + i], halves[i]);
     }
 
 #undef F_INDEX
-#define F_INDEX 25
+#define F_INDEX 30
     //   misc
     for (uint8_t i = 0; i < sizeof(misc); i++) {
         MISC(F_KEYS[F_INDEX + i], misc[i]);

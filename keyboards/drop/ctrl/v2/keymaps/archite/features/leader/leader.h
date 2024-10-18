@@ -27,7 +27,9 @@
 
 uint8_t fourths[] = {
     KC_F, // first
+    KC_V, // first 3/4
     KC_L, // last
+    KC_N, // last 3/4
 };
 
 uint8_t thirds[] = {
