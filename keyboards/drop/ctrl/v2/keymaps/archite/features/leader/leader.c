@@ -67,4 +67,15 @@ void leader_end_user(void) {
         ak_screen_saver();
         return;
     }
+
+    // paste
+    if (leader_sequence_two_keys(KC_P, KC_C)) {
+        tap_code16(HYPR(KC_C));
+        return;
+    }
+
+    if (leader_sequence_two_keys(KC_P, KC_V)) {
+        tap_code16(HYPR(KC_V));
+        return;
+    }
 }
