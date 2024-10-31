@@ -68,13 +68,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
         case AK_DICTATION:
-            AK_HCS(0xCF);
+            // AK_HCS(AC_DICT);
+            if (record->event.pressed) {
+                host_consumer_send(AC_GLOBE);
+                register_code(KC_S);
+            } else {
+                unregister_code(KC_S);
+                host_consumer_send(0);
+            };
             return false;
         case AK_DO_NOT_DISTURB:
-            AK_HSS(0x9B);
+            AK_HSS(AC_DND);
             return false;
         case AK_GLOBE:
-            AK_HCS(0x29D);
+            AK_HCS(AC_GLOBE);
             return false;
         case AK_LOCK_SCREEN:
             if (record->event.pressed) {
@@ -87,7 +94,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             };
             return false;
         case AK_SPOTLIGHT:
-            AK_HCS(0x221);
+            AK_HCS(AC_SEARCH);
             return false;
 #ifdef RGB_MATRIX_ENABLE
         case RGB_TOG:

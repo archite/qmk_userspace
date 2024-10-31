@@ -8,6 +8,10 @@
 #    include "features/rgb/rgb_matrix_user.h"
 #endif // RGB_MATRIX_ENABLE
 
+#define AC_DICT 0xCF
+#define AC_DND 0x9B
+#define AC_GLOBE 0x29D
+
 // clang-format off
 enum custom_keycodes {
     AK_DICTATION = SAFE_RANGE,
