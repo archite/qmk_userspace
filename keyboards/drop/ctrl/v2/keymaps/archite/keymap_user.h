@@ -1,18 +1,18 @@
 #pragma once
 
+// clang-format off
 #include QMK_KEYBOARD_H // IWYU pragma: export
 
 #include "features/utility/utility.h" // IWYU pragma: export
 
 #ifdef RGB_MATRIX_ENABLE
-#    include "features/rgb/rgb_matrix_user.h"
+#    include "features/rgb/rgb_matrix_user.h" // IWYU pragma: export
 #endif // RGB_MATRIX_ENABLE
 
 #define AC_DICT 0xCF
 #define AC_DND 0x9B
 #define AC_GLOBE 0x29D
 
-// clang-format off
 enum custom_keycodes {
     AK_DICTATION = SAFE_RANGE,
     AK_DO_NOT_DISTURB,
@@ -49,4 +49,14 @@ enum custom_keycodes {
 
 // movement
 #define AK_SPC LT(2, KC_SPC)
-// clang-format on
+
+// safari profiles
+#define AK_SSPP A(G(S(KC_0)))
+#define AK_SSPW A(G(S(KC_1)))
+
+// screenshots
+#define AK_SPSF G(S(KC_3))
+#define AK_SPSC C(AK_SPSF)
+#define AK_SPAF G(S(KC_4))
+#define AK_SPAC C(AK_SPAF)
+// clang-format onuuu
