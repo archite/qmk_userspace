@@ -6,6 +6,7 @@ bool user_rgb_sleep = false;
 
 void ak_lock_screen(void) {
     tap_code16(C(G(KC_Q)));
+    wait_ms(300);
     tap_code16(RCS(KC_PWR));
 #ifdef RGB_MATRIX_ENABLE
     if (rgb_matrix_is_enabled()) {

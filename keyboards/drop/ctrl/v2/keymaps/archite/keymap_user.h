@@ -59,4 +59,4 @@ enum custom_keycodes {
 #define AK_SPSC C(AK_SPSF)
 #define AK_SPAF G(S(KC_4))
 #define AK_SPAC C(AK_SPAF)
-// clang-format onuuu
+// clang-format on

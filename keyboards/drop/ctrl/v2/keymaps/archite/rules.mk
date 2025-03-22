@@ -1,6 +1,7 @@
 CAPS_WORD_ENABLE = yes
 COMBO_ENABLE = yes
 KEYBOARD_SHARED_EP = yes
+LAYER_LOCK_ENABLE = yes
 LEADER_ENABLE = yes
 
 SRC += features/utility/utility.c

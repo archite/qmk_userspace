@@ -33,6 +33,7 @@ void leader_end_user(void) {
 
     //   qmk
     if (leader_sequence_two_keys(KC_Q, KC_B)) {
+        eeconfig_disable();
         reset_keyboard();
         return;
     }
@@ -45,7 +46,7 @@ void leader_end_user(void) {
 
     if (leader_sequence_two_keys(KC_Q, KC_M)) {
         SEND_STRING_DELAY("qmk", TAP_CODE_DELAY);
-        SEND_STRING_DELAY(" compile ", TAP_CODE_DELAY);
+        SEND_STRING_DELAY(" compile --compiledb ", TAP_CODE_DELAY);
         SEND_STRING_DELAY("-kb " QMK_KEYBOARD " -km " QMK_KEYMAP SS_TAP(X_ENTER), TAP_CODE_DELAY);
         return;
     }
