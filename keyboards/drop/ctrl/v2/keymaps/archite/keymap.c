@@ -6,7 +6,7 @@
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT_tkl_ansi(
+    [_MAIN] = LAYOUT_tkl_ansi(
         KC_ESC,           KC_BRID, KC_BRIU, KC_LPAD, AK_SPLT, AK_SIRI, AK_DND,  KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU,    AK_SCVR, KC_SCRL, KC_PAUS,
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,    AK_LOCK, KC_HOME, KC_PGUP,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,    KC_DEL,  KC_END,  KC_PGDN,
@@ -14,7 +14,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,             KC_UP,
         AK_CAPS, KC_LOPT, KC_LCMD,                            AK_SPC,                             KC_RCMD, KC_ROPT, AK_GLOB, MO(1),      KC_LEFT, KC_DOWN, KC_RGHT
     ),
-    [1] = LAYOUT_tkl_ansi(
+    [_ALTERNATE] = LAYOUT_tkl_ansi(
         _______,          KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,     _______, _______, _______,
         _______, AK_SPSF, AK_SPAF, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______,
         _______, RGB_TOG, RGB_VAI, RGB_SPI, RGB_HUI, RGB_SAI, _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______,
@@ -22,12 +22,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,          RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_SW,_______, NK_TOGG, _______, _______, _______, _______,          _______,             _______,
         _______, _______, _______,                            _______,                            _______, _______, _______, _______,    _______, _______, _______
     ),
-    [2] = LAYOUT_tkl_ansi(
+    [_SPECIAL] = LAYOUT_tkl_ansi(
         _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______,
         _______, AK_SPSC, AK_SPAC, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______,
-        _______, _______, AK_SSPW, KC_END,  _______, _______, _______, KC_PGUP, KC_UP,   _______, AK_SSPP, _______, _______, _______,    _______, _______, _______,
-        QK_LLCK, _______, _______, KC_PGDN, _______, _______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,          _______,
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,             _______,
+        _______, _______, _______, KC_END,  _______, _______, _______, KC_PGUP, KC_UP,   _______, _______, _______, _______, _______,    _______, _______, _______,
+        QK_LLCK, AK_TABN, _______, KC_PGDN, _______, _______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, AK_TABL, _______,          _______,
+        _______,          _______, _______, AK_BACK, AK_FWD,  _______, _______, AK_PRTB, AK_NXTB, _______, _______,          _______,             _______,
         _______, _______, _______,                            _______,                            _______, _______, _______, _______,    _______, _______, _______
     )
 };
@@ -61,12 +61,33 @@ bool shutdown_user(bool jump_to_bootloader) {
 }
 #endif
 
-uint8_t mod_state;
+bool     is_cmd_tab_active = false;
+uint16_t cmd_tab_timer     = 0;
+uint8_t  mod_state;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods();
 
     switch (keycode) {
+        case AK_CMD_TAB_LAST:
+        case AK_CMD_TAB_NEXT:
+            if (record->event.pressed) {
+                if (!is_cmd_tab_active) {
+                    is_cmd_tab_active = true;
+                    register_code(KC_LCMD);
+                }
+                cmd_tab_timer = timer_read();
+                if (keycode == AK_CMD_TAB_LAST) {
+                    register_code(KC_LSFT);
+                }
+                register_code(KC_TAB);
+            } else {
+                if (keycode == AK_CMD_TAB_LAST) {
+                    unregister_code(KC_LSFT);
+                }
+                unregister_code(KC_TAB);
+            }
+            return false;
         case AK_DICTATION:
             // AK_HCS(AC_DICT);
             if (record->event.pressed) {
@@ -117,5 +138,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
 #endif
             return true;
+    }
+}
+
+void matrix_scan_user(void) {
+    if (is_cmd_tab_active) {
+        if (get_highest_layer(layer_state) == 0 || timer_elapsed(cmd_tab_timer) > 1000) {
+            unregister_code(KC_LCMD);
+            is_cmd_tab_active = false;
+        }
     }
 }

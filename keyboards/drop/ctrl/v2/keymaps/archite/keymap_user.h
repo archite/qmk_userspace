@@ -13,8 +13,16 @@
 #define AC_DND 0x9B
 #define AC_GLOBE 0x29D
 
+enum custom_layers {
+    _MAIN = 0,
+    _ALTERNATE,
+    _SPECIAL,
+};
+
 enum custom_keycodes {
-    AK_DICTATION = SAFE_RANGE,
+    AK_CMD_TAB_NEXT = SAFE_RANGE,
+    AK_CMD_TAB_LAST,
+    AK_DICTATION,
     AK_DO_NOT_DISTURB,
     AK_GLOBE,
     AK_LOCK_SCREEN,
@@ -22,6 +30,8 @@ enum custom_keycodes {
     AK_SPOTLIGHT,
 };
 
+#define AK_TABL AK_CMD_TAB_LAST
+#define AK_TABN AK_CMD_TAB_NEXT
 #define AK_DND  AK_DO_NOT_DISTURB
 #define AK_GLOB AK_GLOBE
 #define AK_LOCK AK_LOCK_SCREEN
@@ -50,9 +60,11 @@ enum custom_keycodes {
 // movement
 #define AK_SPC LT(2, KC_SPC)
 
-// safari profiles
-#define AK_SSPP A(G(S(KC_0)))
-#define AK_SSPW A(G(S(KC_1)))
+// Navigation
+#define AK_NXTB G(S(KC_RBRC))
+#define AK_PRTB G(S(KC_LBRC))
+#define AK_BACK G(KC_LBRC)
+#define AK_FWD G(KC_RBRC)
 
 // screenshots
 #define AK_SPSF G(S(KC_3))
